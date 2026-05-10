@@ -15,6 +15,7 @@ import { Route as PlayerPlayerIdIndexRouteImport } from './routes/player.$player
 import { Route as PlayerPlayerIdSessionsRouteImport } from './routes/player.$playerId.sessions'
 import { Route as PlayerPlayerIdPlanRouteImport } from './routes/player.$playerId.plan'
 import { Route as PlayerPlayerIdFeedbackRouteImport } from './routes/player.$playerId.feedback'
+import { Route as PlayerPlayerIdTournamentsIndexRouteImport } from './routes/player.$playerId.tournaments.index'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -46,6 +47,12 @@ const PlayerPlayerIdFeedbackRoute = PlayerPlayerIdFeedbackRouteImport.update({
   path: '/feedback',
   getParentRoute: () => PlayerPlayerIdRoute,
 } as any)
+const PlayerPlayerIdTournamentsIndexRoute =
+  PlayerPlayerIdTournamentsIndexRouteImport.update({
+    id: '/tournaments/',
+    path: '/tournaments/',
+    getParentRoute: () => PlayerPlayerIdRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -54,6 +61,7 @@ export interface FileRoutesByFullPath {
   '/player/$playerId/plan': typeof PlayerPlayerIdPlanRoute
   '/player/$playerId/sessions': typeof PlayerPlayerIdSessionsRoute
   '/player/$playerId/': typeof PlayerPlayerIdIndexRoute
+  '/player/$playerId/tournaments/': typeof PlayerPlayerIdTournamentsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -61,6 +69,7 @@ export interface FileRoutesByTo {
   '/player/$playerId/plan': typeof PlayerPlayerIdPlanRoute
   '/player/$playerId/sessions': typeof PlayerPlayerIdSessionsRoute
   '/player/$playerId': typeof PlayerPlayerIdIndexRoute
+  '/player/$playerId/tournaments': typeof PlayerPlayerIdTournamentsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -70,6 +79,7 @@ export interface FileRoutesById {
   '/player/$playerId/plan': typeof PlayerPlayerIdPlanRoute
   '/player/$playerId/sessions': typeof PlayerPlayerIdSessionsRoute
   '/player/$playerId/': typeof PlayerPlayerIdIndexRoute
+  '/player/$playerId/tournaments/': typeof PlayerPlayerIdTournamentsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -80,6 +90,7 @@ export interface FileRouteTypes {
     | '/player/$playerId/plan'
     | '/player/$playerId/sessions'
     | '/player/$playerId/'
+    | '/player/$playerId/tournaments/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -87,6 +98,7 @@ export interface FileRouteTypes {
     | '/player/$playerId/plan'
     | '/player/$playerId/sessions'
     | '/player/$playerId'
+    | '/player/$playerId/tournaments'
   id:
     | '__root__'
     | '/'
@@ -95,6 +107,7 @@ export interface FileRouteTypes {
     | '/player/$playerId/plan'
     | '/player/$playerId/sessions'
     | '/player/$playerId/'
+    | '/player/$playerId/tournaments/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -146,6 +159,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PlayerPlayerIdFeedbackRouteImport
       parentRoute: typeof PlayerPlayerIdRoute
     }
+    '/player/$playerId/tournaments/': {
+      id: '/player/$playerId/tournaments/'
+      path: '/tournaments'
+      fullPath: '/player/$playerId/tournaments/'
+      preLoaderRoute: typeof PlayerPlayerIdTournamentsIndexRouteImport
+      parentRoute: typeof PlayerPlayerIdRoute
+    }
   }
 }
 
@@ -154,6 +174,7 @@ interface PlayerPlayerIdRouteChildren {
   PlayerPlayerIdPlanRoute: typeof PlayerPlayerIdPlanRoute
   PlayerPlayerIdSessionsRoute: typeof PlayerPlayerIdSessionsRoute
   PlayerPlayerIdIndexRoute: typeof PlayerPlayerIdIndexRoute
+  PlayerPlayerIdTournamentsIndexRoute: typeof PlayerPlayerIdTournamentsIndexRoute
 }
 
 const PlayerPlayerIdRouteChildren: PlayerPlayerIdRouteChildren = {
@@ -161,6 +182,7 @@ const PlayerPlayerIdRouteChildren: PlayerPlayerIdRouteChildren = {
   PlayerPlayerIdPlanRoute: PlayerPlayerIdPlanRoute,
   PlayerPlayerIdSessionsRoute: PlayerPlayerIdSessionsRoute,
   PlayerPlayerIdIndexRoute: PlayerPlayerIdIndexRoute,
+  PlayerPlayerIdTournamentsIndexRoute: PlayerPlayerIdTournamentsIndexRoute,
 }
 
 const PlayerPlayerIdRouteWithChildren = PlayerPlayerIdRoute._addFileChildren(
