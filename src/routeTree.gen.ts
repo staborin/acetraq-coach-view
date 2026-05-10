@@ -10,6 +10,8 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as RecordRouteImport } from './routes/record'
+import { Route as ProfileRouteImport } from './routes/profile'
+import { Route as MessagesRouteImport } from './routes/messages'
 import { Route as CalendarRouteImport } from './routes/calendar'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as PlayerPlayerIdRouteImport } from './routes/player.$playerId'
@@ -24,6 +26,16 @@ import { Route as PlayerPlayerIdTournamentsTournamentIdRouteImport } from './rou
 const RecordRoute = RecordRouteImport.update({
   id: '/record',
   path: '/record',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProfileRoute = ProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MessagesRoute = MessagesRouteImport.update({
+  id: '/messages',
+  path: '/messages',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CalendarRoute = CalendarRouteImport.update({
@@ -82,6 +94,8 @@ const PlayerPlayerIdTournamentsTournamentIdRoute =
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/calendar': typeof CalendarRoute
+  '/messages': typeof MessagesRoute
+  '/profile': typeof ProfileRoute
   '/record': typeof RecordRoute
   '/player/$playerId': typeof PlayerPlayerIdRouteWithChildren
   '/player/$playerId/feedback': typeof PlayerPlayerIdFeedbackRoute
@@ -95,6 +109,8 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/calendar': typeof CalendarRoute
+  '/messages': typeof MessagesRoute
+  '/profile': typeof ProfileRoute
   '/record': typeof RecordRoute
   '/player/$playerId/feedback': typeof PlayerPlayerIdFeedbackRoute
   '/player/$playerId/homework': typeof PlayerPlayerIdHomeworkRoute
@@ -108,6 +124,8 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/calendar': typeof CalendarRoute
+  '/messages': typeof MessagesRoute
+  '/profile': typeof ProfileRoute
   '/record': typeof RecordRoute
   '/player/$playerId': typeof PlayerPlayerIdRouteWithChildren
   '/player/$playerId/feedback': typeof PlayerPlayerIdFeedbackRoute
@@ -123,6 +141,8 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/calendar'
+    | '/messages'
+    | '/profile'
     | '/record'
     | '/player/$playerId'
     | '/player/$playerId/feedback'
@@ -136,6 +156,8 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/calendar'
+    | '/messages'
+    | '/profile'
     | '/record'
     | '/player/$playerId/feedback'
     | '/player/$playerId/homework'
@@ -148,6 +170,8 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/calendar'
+    | '/messages'
+    | '/profile'
     | '/record'
     | '/player/$playerId'
     | '/player/$playerId/feedback'
@@ -162,6 +186,8 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   CalendarRoute: typeof CalendarRoute
+  MessagesRoute: typeof MessagesRoute
+  ProfileRoute: typeof ProfileRoute
   RecordRoute: typeof RecordRoute
   PlayerPlayerIdRoute: typeof PlayerPlayerIdRouteWithChildren
 }
@@ -173,6 +199,20 @@ declare module '@tanstack/react-router' {
       path: '/record'
       fullPath: '/record'
       preLoaderRoute: typeof RecordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/profile': {
+      id: '/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof ProfileRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/messages': {
+      id: '/messages'
+      path: '/messages'
+      fullPath: '/messages'
+      preLoaderRoute: typeof MessagesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/calendar': {
@@ -276,6 +316,8 @@ const PlayerPlayerIdRouteWithChildren = PlayerPlayerIdRoute._addFileChildren(
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   CalendarRoute: CalendarRoute,
+  MessagesRoute: MessagesRoute,
+  ProfileRoute: ProfileRoute,
   RecordRoute: RecordRoute,
   PlayerPlayerIdRoute: PlayerPlayerIdRouteWithChildren,
 }
