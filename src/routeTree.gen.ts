@@ -16,6 +16,7 @@ import { Route as PlayerPlayerIdSessionsRouteImport } from './routes/player.$pla
 import { Route as PlayerPlayerIdPlanRouteImport } from './routes/player.$playerId.plan'
 import { Route as PlayerPlayerIdFeedbackRouteImport } from './routes/player.$playerId.feedback'
 import { Route as PlayerPlayerIdTournamentsIndexRouteImport } from './routes/player.$playerId.tournaments.index'
+import { Route as PlayerPlayerIdTournamentsTournamentIdRouteImport } from './routes/player.$playerId.tournaments.$tournamentId'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -53,6 +54,12 @@ const PlayerPlayerIdTournamentsIndexRoute =
     path: '/tournaments/',
     getParentRoute: () => PlayerPlayerIdRoute,
   } as any)
+const PlayerPlayerIdTournamentsTournamentIdRoute =
+  PlayerPlayerIdTournamentsTournamentIdRouteImport.update({
+    id: '/tournaments/$tournamentId',
+    path: '/tournaments/$tournamentId',
+    getParentRoute: () => PlayerPlayerIdRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -61,6 +68,7 @@ export interface FileRoutesByFullPath {
   '/player/$playerId/plan': typeof PlayerPlayerIdPlanRoute
   '/player/$playerId/sessions': typeof PlayerPlayerIdSessionsRoute
   '/player/$playerId/': typeof PlayerPlayerIdIndexRoute
+  '/player/$playerId/tournaments/$tournamentId': typeof PlayerPlayerIdTournamentsTournamentIdRoute
   '/player/$playerId/tournaments/': typeof PlayerPlayerIdTournamentsIndexRoute
 }
 export interface FileRoutesByTo {
@@ -69,6 +77,7 @@ export interface FileRoutesByTo {
   '/player/$playerId/plan': typeof PlayerPlayerIdPlanRoute
   '/player/$playerId/sessions': typeof PlayerPlayerIdSessionsRoute
   '/player/$playerId': typeof PlayerPlayerIdIndexRoute
+  '/player/$playerId/tournaments/$tournamentId': typeof PlayerPlayerIdTournamentsTournamentIdRoute
   '/player/$playerId/tournaments': typeof PlayerPlayerIdTournamentsIndexRoute
 }
 export interface FileRoutesById {
@@ -79,6 +88,7 @@ export interface FileRoutesById {
   '/player/$playerId/plan': typeof PlayerPlayerIdPlanRoute
   '/player/$playerId/sessions': typeof PlayerPlayerIdSessionsRoute
   '/player/$playerId/': typeof PlayerPlayerIdIndexRoute
+  '/player/$playerId/tournaments/$tournamentId': typeof PlayerPlayerIdTournamentsTournamentIdRoute
   '/player/$playerId/tournaments/': typeof PlayerPlayerIdTournamentsIndexRoute
 }
 export interface FileRouteTypes {
@@ -90,6 +100,7 @@ export interface FileRouteTypes {
     | '/player/$playerId/plan'
     | '/player/$playerId/sessions'
     | '/player/$playerId/'
+    | '/player/$playerId/tournaments/$tournamentId'
     | '/player/$playerId/tournaments/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -98,6 +109,7 @@ export interface FileRouteTypes {
     | '/player/$playerId/plan'
     | '/player/$playerId/sessions'
     | '/player/$playerId'
+    | '/player/$playerId/tournaments/$tournamentId'
     | '/player/$playerId/tournaments'
   id:
     | '__root__'
@@ -107,6 +119,7 @@ export interface FileRouteTypes {
     | '/player/$playerId/plan'
     | '/player/$playerId/sessions'
     | '/player/$playerId/'
+    | '/player/$playerId/tournaments/$tournamentId'
     | '/player/$playerId/tournaments/'
   fileRoutesById: FileRoutesById
 }
@@ -166,6 +179,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PlayerPlayerIdTournamentsIndexRouteImport
       parentRoute: typeof PlayerPlayerIdRoute
     }
+    '/player/$playerId/tournaments/$tournamentId': {
+      id: '/player/$playerId/tournaments/$tournamentId'
+      path: '/tournaments/$tournamentId'
+      fullPath: '/player/$playerId/tournaments/$tournamentId'
+      preLoaderRoute: typeof PlayerPlayerIdTournamentsTournamentIdRouteImport
+      parentRoute: typeof PlayerPlayerIdRoute
+    }
   }
 }
 
@@ -174,6 +194,7 @@ interface PlayerPlayerIdRouteChildren {
   PlayerPlayerIdPlanRoute: typeof PlayerPlayerIdPlanRoute
   PlayerPlayerIdSessionsRoute: typeof PlayerPlayerIdSessionsRoute
   PlayerPlayerIdIndexRoute: typeof PlayerPlayerIdIndexRoute
+  PlayerPlayerIdTournamentsTournamentIdRoute: typeof PlayerPlayerIdTournamentsTournamentIdRoute
   PlayerPlayerIdTournamentsIndexRoute: typeof PlayerPlayerIdTournamentsIndexRoute
 }
 
@@ -182,6 +203,8 @@ const PlayerPlayerIdRouteChildren: PlayerPlayerIdRouteChildren = {
   PlayerPlayerIdPlanRoute: PlayerPlayerIdPlanRoute,
   PlayerPlayerIdSessionsRoute: PlayerPlayerIdSessionsRoute,
   PlayerPlayerIdIndexRoute: PlayerPlayerIdIndexRoute,
+  PlayerPlayerIdTournamentsTournamentIdRoute:
+    PlayerPlayerIdTournamentsTournamentIdRoute,
   PlayerPlayerIdTournamentsIndexRoute: PlayerPlayerIdTournamentsIndexRoute,
 }
 
