@@ -21,7 +21,7 @@ export function PlayerTabs({ playerId }: { playerId: string }) {
           const href = base + t.key;
           const active = t.key === "" ? pathname === base : pathname.startsWith(href);
           return (
-            <Link
+            <AppLink
               key={t.key}
               to={href}
               className={cn(
@@ -32,7 +32,7 @@ export function PlayerTabs({ playerId }: { playerId: string }) {
               )}
             >
               {t.label}
-            </Link>
+            </AppLink>
           );
         })}
       </div>
