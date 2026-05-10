@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as RecordRouteImport } from './routes/record'
+import { Route as CalendarRouteImport } from './routes/calendar'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as PlayerPlayerIdRouteImport } from './routes/player.$playerId'
 import { Route as PlayerPlayerIdIndexRouteImport } from './routes/player.$playerId.index'
@@ -23,6 +24,11 @@ import { Route as PlayerPlayerIdTournamentsTournamentIdRouteImport } from './rou
 const RecordRoute = RecordRouteImport.update({
   id: '/record',
   path: '/record',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CalendarRoute = CalendarRouteImport.update({
+  id: '/calendar',
+  path: '/calendar',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -75,6 +81,7 @@ const PlayerPlayerIdTournamentsTournamentIdRoute =
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/calendar': typeof CalendarRoute
   '/record': typeof RecordRoute
   '/player/$playerId': typeof PlayerPlayerIdRouteWithChildren
   '/player/$playerId/feedback': typeof PlayerPlayerIdFeedbackRoute
@@ -87,6 +94,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/calendar': typeof CalendarRoute
   '/record': typeof RecordRoute
   '/player/$playerId/feedback': typeof PlayerPlayerIdFeedbackRoute
   '/player/$playerId/homework': typeof PlayerPlayerIdHomeworkRoute
@@ -99,6 +107,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/calendar': typeof CalendarRoute
   '/record': typeof RecordRoute
   '/player/$playerId': typeof PlayerPlayerIdRouteWithChildren
   '/player/$playerId/feedback': typeof PlayerPlayerIdFeedbackRoute
@@ -113,6 +122,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/calendar'
     | '/record'
     | '/player/$playerId'
     | '/player/$playerId/feedback'
@@ -125,6 +135,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/calendar'
     | '/record'
     | '/player/$playerId/feedback'
     | '/player/$playerId/homework'
@@ -136,6 +147,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/calendar'
     | '/record'
     | '/player/$playerId'
     | '/player/$playerId/feedback'
@@ -149,6 +161,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  CalendarRoute: typeof CalendarRoute
   RecordRoute: typeof RecordRoute
   PlayerPlayerIdRoute: typeof PlayerPlayerIdRouteWithChildren
 }
@@ -160,6 +173,13 @@ declare module '@tanstack/react-router' {
       path: '/record'
       fullPath: '/record'
       preLoaderRoute: typeof RecordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/calendar': {
+      id: '/calendar'
+      path: '/calendar'
+      fullPath: '/calendar'
+      preLoaderRoute: typeof CalendarRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -255,6 +275,7 @@ const PlayerPlayerIdRouteWithChildren = PlayerPlayerIdRoute._addFileChildren(
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  CalendarRoute: CalendarRoute,
   RecordRoute: RecordRoute,
   PlayerPlayerIdRoute: PlayerPlayerIdRouteWithChildren,
 }
