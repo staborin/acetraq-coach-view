@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as PlayerPlayerIdRouteImport } from './routes/player.$playerId'
 import { Route as PlayerPlayerIdIndexRouteImport } from './routes/player.$playerId.index'
+import { Route as PlayerPlayerIdSessionsRouteImport } from './routes/player.$playerId.sessions'
 import { Route as PlayerPlayerIdPlanRouteImport } from './routes/player.$playerId.plan'
 
 const IndexRoute = IndexRouteImport.update({
@@ -29,6 +30,11 @@ const PlayerPlayerIdIndexRoute = PlayerPlayerIdIndexRouteImport.update({
   path: '/',
   getParentRoute: () => PlayerPlayerIdRoute,
 } as any)
+const PlayerPlayerIdSessionsRoute = PlayerPlayerIdSessionsRouteImport.update({
+  id: '/sessions',
+  path: '/sessions',
+  getParentRoute: () => PlayerPlayerIdRoute,
+} as any)
 const PlayerPlayerIdPlanRoute = PlayerPlayerIdPlanRouteImport.update({
   id: '/plan',
   path: '/plan',
@@ -39,11 +45,13 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/player/$playerId': typeof PlayerPlayerIdRouteWithChildren
   '/player/$playerId/plan': typeof PlayerPlayerIdPlanRoute
+  '/player/$playerId/sessions': typeof PlayerPlayerIdSessionsRoute
   '/player/$playerId/': typeof PlayerPlayerIdIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/player/$playerId/plan': typeof PlayerPlayerIdPlanRoute
+  '/player/$playerId/sessions': typeof PlayerPlayerIdSessionsRoute
   '/player/$playerId': typeof PlayerPlayerIdIndexRoute
 }
 export interface FileRoutesById {
@@ -51,6 +59,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/player/$playerId': typeof PlayerPlayerIdRouteWithChildren
   '/player/$playerId/plan': typeof PlayerPlayerIdPlanRoute
+  '/player/$playerId/sessions': typeof PlayerPlayerIdSessionsRoute
   '/player/$playerId/': typeof PlayerPlayerIdIndexRoute
 }
 export interface FileRouteTypes {
@@ -59,14 +68,20 @@ export interface FileRouteTypes {
     | '/'
     | '/player/$playerId'
     | '/player/$playerId/plan'
+    | '/player/$playerId/sessions'
     | '/player/$playerId/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/player/$playerId/plan' | '/player/$playerId'
+  to:
+    | '/'
+    | '/player/$playerId/plan'
+    | '/player/$playerId/sessions'
+    | '/player/$playerId'
   id:
     | '__root__'
     | '/'
     | '/player/$playerId'
     | '/player/$playerId/plan'
+    | '/player/$playerId/sessions'
     | '/player/$playerId/'
   fileRoutesById: FileRoutesById
 }
@@ -98,6 +113,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PlayerPlayerIdIndexRouteImport
       parentRoute: typeof PlayerPlayerIdRoute
     }
+    '/player/$playerId/sessions': {
+      id: '/player/$playerId/sessions'
+      path: '/sessions'
+      fullPath: '/player/$playerId/sessions'
+      preLoaderRoute: typeof PlayerPlayerIdSessionsRouteImport
+      parentRoute: typeof PlayerPlayerIdRoute
+    }
     '/player/$playerId/plan': {
       id: '/player/$playerId/plan'
       path: '/plan'
@@ -110,11 +132,13 @@ declare module '@tanstack/react-router' {
 
 interface PlayerPlayerIdRouteChildren {
   PlayerPlayerIdPlanRoute: typeof PlayerPlayerIdPlanRoute
+  PlayerPlayerIdSessionsRoute: typeof PlayerPlayerIdSessionsRoute
   PlayerPlayerIdIndexRoute: typeof PlayerPlayerIdIndexRoute
 }
 
 const PlayerPlayerIdRouteChildren: PlayerPlayerIdRouteChildren = {
   PlayerPlayerIdPlanRoute: PlayerPlayerIdPlanRoute,
+  PlayerPlayerIdSessionsRoute: PlayerPlayerIdSessionsRoute,
   PlayerPlayerIdIndexRoute: PlayerPlayerIdIndexRoute,
 }
 
