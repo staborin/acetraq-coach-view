@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { Link } from "@tanstack/react-router";
+import { useNavigate } from "@tanstack/react-router";
 import { ChevronLeft } from "lucide-react";
 import { BottomNav } from "./BottomNav";
 import { cn } from "@/lib/utils";
