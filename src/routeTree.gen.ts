@@ -14,6 +14,7 @@ import { Route as PlayerPlayerIdRouteImport } from './routes/player.$playerId'
 import { Route as PlayerPlayerIdIndexRouteImport } from './routes/player.$playerId.index'
 import { Route as PlayerPlayerIdSessionsRouteImport } from './routes/player.$playerId.sessions'
 import { Route as PlayerPlayerIdPlanRouteImport } from './routes/player.$playerId.plan'
+import { Route as PlayerPlayerIdHomeworkRouteImport } from './routes/player.$playerId.homework'
 import { Route as PlayerPlayerIdFeedbackRouteImport } from './routes/player.$playerId.feedback'
 import { Route as PlayerPlayerIdTournamentsIndexRouteImport } from './routes/player.$playerId.tournaments.index'
 import { Route as PlayerPlayerIdTournamentsTournamentIdRouteImport } from './routes/player.$playerId.tournaments.$tournamentId'
@@ -43,6 +44,11 @@ const PlayerPlayerIdPlanRoute = PlayerPlayerIdPlanRouteImport.update({
   path: '/plan',
   getParentRoute: () => PlayerPlayerIdRoute,
 } as any)
+const PlayerPlayerIdHomeworkRoute = PlayerPlayerIdHomeworkRouteImport.update({
+  id: '/homework',
+  path: '/homework',
+  getParentRoute: () => PlayerPlayerIdRoute,
+} as any)
 const PlayerPlayerIdFeedbackRoute = PlayerPlayerIdFeedbackRouteImport.update({
   id: '/feedback',
   path: '/feedback',
@@ -65,6 +71,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/player/$playerId': typeof PlayerPlayerIdRouteWithChildren
   '/player/$playerId/feedback': typeof PlayerPlayerIdFeedbackRoute
+  '/player/$playerId/homework': typeof PlayerPlayerIdHomeworkRoute
   '/player/$playerId/plan': typeof PlayerPlayerIdPlanRoute
   '/player/$playerId/sessions': typeof PlayerPlayerIdSessionsRoute
   '/player/$playerId/': typeof PlayerPlayerIdIndexRoute
@@ -74,6 +81,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/player/$playerId/feedback': typeof PlayerPlayerIdFeedbackRoute
+  '/player/$playerId/homework': typeof PlayerPlayerIdHomeworkRoute
   '/player/$playerId/plan': typeof PlayerPlayerIdPlanRoute
   '/player/$playerId/sessions': typeof PlayerPlayerIdSessionsRoute
   '/player/$playerId': typeof PlayerPlayerIdIndexRoute
@@ -85,6 +93,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/player/$playerId': typeof PlayerPlayerIdRouteWithChildren
   '/player/$playerId/feedback': typeof PlayerPlayerIdFeedbackRoute
+  '/player/$playerId/homework': typeof PlayerPlayerIdHomeworkRoute
   '/player/$playerId/plan': typeof PlayerPlayerIdPlanRoute
   '/player/$playerId/sessions': typeof PlayerPlayerIdSessionsRoute
   '/player/$playerId/': typeof PlayerPlayerIdIndexRoute
@@ -97,6 +106,7 @@ export interface FileRouteTypes {
     | '/'
     | '/player/$playerId'
     | '/player/$playerId/feedback'
+    | '/player/$playerId/homework'
     | '/player/$playerId/plan'
     | '/player/$playerId/sessions'
     | '/player/$playerId/'
@@ -106,6 +116,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/player/$playerId/feedback'
+    | '/player/$playerId/homework'
     | '/player/$playerId/plan'
     | '/player/$playerId/sessions'
     | '/player/$playerId'
@@ -116,6 +127,7 @@ export interface FileRouteTypes {
     | '/'
     | '/player/$playerId'
     | '/player/$playerId/feedback'
+    | '/player/$playerId/homework'
     | '/player/$playerId/plan'
     | '/player/$playerId/sessions'
     | '/player/$playerId/'
@@ -165,6 +177,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PlayerPlayerIdPlanRouteImport
       parentRoute: typeof PlayerPlayerIdRoute
     }
+    '/player/$playerId/homework': {
+      id: '/player/$playerId/homework'
+      path: '/homework'
+      fullPath: '/player/$playerId/homework'
+      preLoaderRoute: typeof PlayerPlayerIdHomeworkRouteImport
+      parentRoute: typeof PlayerPlayerIdRoute
+    }
     '/player/$playerId/feedback': {
       id: '/player/$playerId/feedback'
       path: '/feedback'
@@ -191,6 +210,7 @@ declare module '@tanstack/react-router' {
 
 interface PlayerPlayerIdRouteChildren {
   PlayerPlayerIdFeedbackRoute: typeof PlayerPlayerIdFeedbackRoute
+  PlayerPlayerIdHomeworkRoute: typeof PlayerPlayerIdHomeworkRoute
   PlayerPlayerIdPlanRoute: typeof PlayerPlayerIdPlanRoute
   PlayerPlayerIdSessionsRoute: typeof PlayerPlayerIdSessionsRoute
   PlayerPlayerIdIndexRoute: typeof PlayerPlayerIdIndexRoute
@@ -200,6 +220,7 @@ interface PlayerPlayerIdRouteChildren {
 
 const PlayerPlayerIdRouteChildren: PlayerPlayerIdRouteChildren = {
   PlayerPlayerIdFeedbackRoute: PlayerPlayerIdFeedbackRoute,
+  PlayerPlayerIdHomeworkRoute: PlayerPlayerIdHomeworkRoute,
   PlayerPlayerIdPlanRoute: PlayerPlayerIdPlanRoute,
   PlayerPlayerIdSessionsRoute: PlayerPlayerIdSessionsRoute,
   PlayerPlayerIdIndexRoute: PlayerPlayerIdIndexRoute,
