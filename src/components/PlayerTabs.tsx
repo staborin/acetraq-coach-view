@@ -1,4 +1,5 @@
-import { Link, useLocation } from "@tanstack/react-router";
+import { useLocation } from "@tanstack/react-router";
+import { AppLink } from "./AppLink";
 import { cn } from "@/lib/utils";
 
 const tabs = [
