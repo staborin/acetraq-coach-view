@@ -27,25 +27,27 @@ export function MobileShell({
 export function PageHeader({
   title,
   subtitle,
-  back,
+  showBack,
   right,
 }: {
   title: string;
   subtitle?: string;
-  back?: string;
+  showBack?: boolean;
   right?: ReactNode;
 }) {
+  const navigate = useNavigate();
   return (
     <header className="sticky top-0 z-30 border-b border-border/60 bg-background/85 backdrop-blur-md">
       <div className="flex items-center gap-2 px-4 pt-[env(safe-area-inset-top)]">
         <div className="flex h-14 w-full items-center gap-2">
-          {back && (
-            <Link
-              to={back}
+          {showBack && (
+            <button
+              onClick={() => window.history.length > 1 ? window.history.back() : navigate({ to: "/" })}
               className="-ml-2 flex h-9 w-9 items-center justify-center rounded-full text-muted-foreground hover:bg-surface-2"
+              aria-label="Back"
             >
               <ChevronLeft className="h-5 w-5" />
-            </Link>
+            </button>
           )}
           <div className="min-w-0 flex-1">
             <h1 className="truncate text-base font-semibold tracking-tight">{title}</h1>
