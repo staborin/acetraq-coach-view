@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as PlayerPlayerIdRouteImport } from './routes/player.$playerId'
+import { Route as PlayerPlayerIdIndexRouteImport } from './routes/player.$playerId.index'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -22,31 +23,38 @@ const PlayerPlayerIdRoute = PlayerPlayerIdRouteImport.update({
   path: '/player/$playerId',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PlayerPlayerIdIndexRoute = PlayerPlayerIdIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => PlayerPlayerIdRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/player/$playerId': typeof PlayerPlayerIdRoute
+  '/player/$playerId': typeof PlayerPlayerIdRouteWithChildren
+  '/player/$playerId/': typeof PlayerPlayerIdIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/player/$playerId': typeof PlayerPlayerIdRoute
+  '/player/$playerId': typeof PlayerPlayerIdIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/player/$playerId': typeof PlayerPlayerIdRoute
+  '/player/$playerId': typeof PlayerPlayerIdRouteWithChildren
+  '/player/$playerId/': typeof PlayerPlayerIdIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/player/$playerId'
+  fullPaths: '/' | '/player/$playerId' | '/player/$playerId/'
   fileRoutesByTo: FileRoutesByTo
   to: '/' | '/player/$playerId'
-  id: '__root__' | '/' | '/player/$playerId'
+  id: '__root__' | '/' | '/player/$playerId' | '/player/$playerId/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  PlayerPlayerIdRoute: typeof PlayerPlayerIdRoute
+  PlayerPlayerIdRoute: typeof PlayerPlayerIdRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
@@ -65,12 +73,31 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PlayerPlayerIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/player/$playerId/': {
+      id: '/player/$playerId/'
+      path: '/'
+      fullPath: '/player/$playerId/'
+      preLoaderRoute: typeof PlayerPlayerIdIndexRouteImport
+      parentRoute: typeof PlayerPlayerIdRoute
+    }
   }
 }
 
+interface PlayerPlayerIdRouteChildren {
+  PlayerPlayerIdIndexRoute: typeof PlayerPlayerIdIndexRoute
+}
+
+const PlayerPlayerIdRouteChildren: PlayerPlayerIdRouteChildren = {
+  PlayerPlayerIdIndexRoute: PlayerPlayerIdIndexRoute,
+}
+
+const PlayerPlayerIdRouteWithChildren = PlayerPlayerIdRoute._addFileChildren(
+  PlayerPlayerIdRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  PlayerPlayerIdRoute: PlayerPlayerIdRoute,
+  PlayerPlayerIdRoute: PlayerPlayerIdRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
