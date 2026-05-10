@@ -1,7 +1,7 @@
 import { createFileRoute, useParams } from "@tanstack/react-router";
 import { useState } from "react";
 import { homework, type Homework } from "@/lib/data";
-import { CheckCircle2, AlertCircle, Plus, TrendingFlat, Activity } from "lucide-react";
+import { CheckCircle2, AlertCircle, Plus, Minus, Activity } from "lucide-react";
 
 export const Route = createFileRoute("/player/$playerId/homework")({
   component: HomeworkPage,
@@ -22,7 +22,7 @@ function HomeworkPage() {
         <div className="mt-2 flex items-end justify-between">
           <p className="text-3xl font-semibold">{overall}%</p>
           <span className="inline-flex items-center gap-1 rounded-full bg-rag-amber/15 px-2 py-1 text-[11px] font-medium text-rag-amber">
-            <TrendingFlat className="h-3 w-3" /> Stable
+            <Minus className="h-3 w-3" /> Stable
           </span>
         </div>
         <div className="mt-3 h-2 overflow-hidden rounded-full bg-surface-2">
