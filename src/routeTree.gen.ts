@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as RecordRouteImport } from './routes/record'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as PlayerPlayerIdRouteImport } from './routes/player.$playerId'
 import { Route as PlayerPlayerIdIndexRouteImport } from './routes/player.$playerId.index'
@@ -19,6 +20,11 @@ import { Route as PlayerPlayerIdFeedbackRouteImport } from './routes/player.$pla
 import { Route as PlayerPlayerIdTournamentsIndexRouteImport } from './routes/player.$playerId.tournaments.index'
 import { Route as PlayerPlayerIdTournamentsTournamentIdRouteImport } from './routes/player.$playerId.tournaments.$tournamentId'
 
+const RecordRoute = RecordRouteImport.update({
+  id: '/record',
+  path: '/record',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -69,6 +75,7 @@ const PlayerPlayerIdTournamentsTournamentIdRoute =
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/record': typeof RecordRoute
   '/player/$playerId': typeof PlayerPlayerIdRouteWithChildren
   '/player/$playerId/feedback': typeof PlayerPlayerIdFeedbackRoute
   '/player/$playerId/homework': typeof PlayerPlayerIdHomeworkRoute
@@ -80,6 +87,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/record': typeof RecordRoute
   '/player/$playerId/feedback': typeof PlayerPlayerIdFeedbackRoute
   '/player/$playerId/homework': typeof PlayerPlayerIdHomeworkRoute
   '/player/$playerId/plan': typeof PlayerPlayerIdPlanRoute
@@ -91,6 +99,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/record': typeof RecordRoute
   '/player/$playerId': typeof PlayerPlayerIdRouteWithChildren
   '/player/$playerId/feedback': typeof PlayerPlayerIdFeedbackRoute
   '/player/$playerId/homework': typeof PlayerPlayerIdHomeworkRoute
@@ -104,6 +113,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/record'
     | '/player/$playerId'
     | '/player/$playerId/feedback'
     | '/player/$playerId/homework'
@@ -115,6 +125,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/record'
     | '/player/$playerId/feedback'
     | '/player/$playerId/homework'
     | '/player/$playerId/plan'
@@ -125,6 +136,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/record'
     | '/player/$playerId'
     | '/player/$playerId/feedback'
     | '/player/$playerId/homework'
@@ -137,11 +149,19 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  RecordRoute: typeof RecordRoute
   PlayerPlayerIdRoute: typeof PlayerPlayerIdRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/record': {
+      id: '/record'
+      path: '/record'
+      fullPath: '/record'
+      preLoaderRoute: typeof RecordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -235,8 +255,19 @@ const PlayerPlayerIdRouteWithChildren = PlayerPlayerIdRoute._addFileChildren(
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  RecordRoute: RecordRoute,
   PlayerPlayerIdRoute: PlayerPlayerIdRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
