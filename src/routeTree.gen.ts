@@ -9,38 +9,219 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as RecordRouteImport } from './routes/record'
+import { Route as ProfileRouteImport } from './routes/profile'
+import { Route as MessagesRouteImport } from './routes/messages'
+import { Route as CalendarRouteImport } from './routes/calendar'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as PlayerPlayerIdRouteImport } from './routes/player.$playerId'
+import { Route as PlayerPlayerIdIndexRouteImport } from './routes/player.$playerId.index'
+import { Route as PlayerPlayerIdSessionsRouteImport } from './routes/player.$playerId.sessions'
+import { Route as PlayerPlayerIdPlanRouteImport } from './routes/player.$playerId.plan'
+import { Route as PlayerPlayerIdHomeworkRouteImport } from './routes/player.$playerId.homework'
+import { Route as PlayerPlayerIdFeedbackRouteImport } from './routes/player.$playerId.feedback'
+import { Route as PlayerPlayerIdTournamentsIndexRouteImport } from './routes/player.$playerId.tournaments.index'
+import { Route as PlayerPlayerIdTournamentsTournamentIdRouteImport } from './routes/player.$playerId.tournaments.$tournamentId'
 
+const RecordRoute = RecordRouteImport.update({
+  id: '/record',
+  path: '/record',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProfileRoute = ProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MessagesRoute = MessagesRouteImport.update({
+  id: '/messages',
+  path: '/messages',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CalendarRoute = CalendarRouteImport.update({
+  id: '/calendar',
+  path: '/calendar',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PlayerPlayerIdRoute = PlayerPlayerIdRouteImport.update({
+  id: '/player/$playerId',
+  path: '/player/$playerId',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PlayerPlayerIdIndexRoute = PlayerPlayerIdIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => PlayerPlayerIdRoute,
+} as any)
+const PlayerPlayerIdSessionsRoute = PlayerPlayerIdSessionsRouteImport.update({
+  id: '/sessions',
+  path: '/sessions',
+  getParentRoute: () => PlayerPlayerIdRoute,
+} as any)
+const PlayerPlayerIdPlanRoute = PlayerPlayerIdPlanRouteImport.update({
+  id: '/plan',
+  path: '/plan',
+  getParentRoute: () => PlayerPlayerIdRoute,
+} as any)
+const PlayerPlayerIdHomeworkRoute = PlayerPlayerIdHomeworkRouteImport.update({
+  id: '/homework',
+  path: '/homework',
+  getParentRoute: () => PlayerPlayerIdRoute,
+} as any)
+const PlayerPlayerIdFeedbackRoute = PlayerPlayerIdFeedbackRouteImport.update({
+  id: '/feedback',
+  path: '/feedback',
+  getParentRoute: () => PlayerPlayerIdRoute,
+} as any)
+const PlayerPlayerIdTournamentsIndexRoute =
+  PlayerPlayerIdTournamentsIndexRouteImport.update({
+    id: '/tournaments/',
+    path: '/tournaments/',
+    getParentRoute: () => PlayerPlayerIdRoute,
+  } as any)
+const PlayerPlayerIdTournamentsTournamentIdRoute =
+  PlayerPlayerIdTournamentsTournamentIdRouteImport.update({
+    id: '/tournaments/$tournamentId',
+    path: '/tournaments/$tournamentId',
+    getParentRoute: () => PlayerPlayerIdRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/calendar': typeof CalendarRoute
+  '/messages': typeof MessagesRoute
+  '/profile': typeof ProfileRoute
+  '/record': typeof RecordRoute
+  '/player/$playerId': typeof PlayerPlayerIdRouteWithChildren
+  '/player/$playerId/feedback': typeof PlayerPlayerIdFeedbackRoute
+  '/player/$playerId/homework': typeof PlayerPlayerIdHomeworkRoute
+  '/player/$playerId/plan': typeof PlayerPlayerIdPlanRoute
+  '/player/$playerId/sessions': typeof PlayerPlayerIdSessionsRoute
+  '/player/$playerId/': typeof PlayerPlayerIdIndexRoute
+  '/player/$playerId/tournaments/$tournamentId': typeof PlayerPlayerIdTournamentsTournamentIdRoute
+  '/player/$playerId/tournaments/': typeof PlayerPlayerIdTournamentsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/calendar': typeof CalendarRoute
+  '/messages': typeof MessagesRoute
+  '/profile': typeof ProfileRoute
+  '/record': typeof RecordRoute
+  '/player/$playerId/feedback': typeof PlayerPlayerIdFeedbackRoute
+  '/player/$playerId/homework': typeof PlayerPlayerIdHomeworkRoute
+  '/player/$playerId/plan': typeof PlayerPlayerIdPlanRoute
+  '/player/$playerId/sessions': typeof PlayerPlayerIdSessionsRoute
+  '/player/$playerId': typeof PlayerPlayerIdIndexRoute
+  '/player/$playerId/tournaments/$tournamentId': typeof PlayerPlayerIdTournamentsTournamentIdRoute
+  '/player/$playerId/tournaments': typeof PlayerPlayerIdTournamentsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/calendar': typeof CalendarRoute
+  '/messages': typeof MessagesRoute
+  '/profile': typeof ProfileRoute
+  '/record': typeof RecordRoute
+  '/player/$playerId': typeof PlayerPlayerIdRouteWithChildren
+  '/player/$playerId/feedback': typeof PlayerPlayerIdFeedbackRoute
+  '/player/$playerId/homework': typeof PlayerPlayerIdHomeworkRoute
+  '/player/$playerId/plan': typeof PlayerPlayerIdPlanRoute
+  '/player/$playerId/sessions': typeof PlayerPlayerIdSessionsRoute
+  '/player/$playerId/': typeof PlayerPlayerIdIndexRoute
+  '/player/$playerId/tournaments/$tournamentId': typeof PlayerPlayerIdTournamentsTournamentIdRoute
+  '/player/$playerId/tournaments/': typeof PlayerPlayerIdTournamentsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/calendar'
+    | '/messages'
+    | '/profile'
+    | '/record'
+    | '/player/$playerId'
+    | '/player/$playerId/feedback'
+    | '/player/$playerId/homework'
+    | '/player/$playerId/plan'
+    | '/player/$playerId/sessions'
+    | '/player/$playerId/'
+    | '/player/$playerId/tournaments/$tournamentId'
+    | '/player/$playerId/tournaments/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/calendar'
+    | '/messages'
+    | '/profile'
+    | '/record'
+    | '/player/$playerId/feedback'
+    | '/player/$playerId/homework'
+    | '/player/$playerId/plan'
+    | '/player/$playerId/sessions'
+    | '/player/$playerId'
+    | '/player/$playerId/tournaments/$tournamentId'
+    | '/player/$playerId/tournaments'
+  id:
+    | '__root__'
+    | '/'
+    | '/calendar'
+    | '/messages'
+    | '/profile'
+    | '/record'
+    | '/player/$playerId'
+    | '/player/$playerId/feedback'
+    | '/player/$playerId/homework'
+    | '/player/$playerId/plan'
+    | '/player/$playerId/sessions'
+    | '/player/$playerId/'
+    | '/player/$playerId/tournaments/$tournamentId'
+    | '/player/$playerId/tournaments/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  CalendarRoute: typeof CalendarRoute
+  MessagesRoute: typeof MessagesRoute
+  ProfileRoute: typeof ProfileRoute
+  RecordRoute: typeof RecordRoute
+  PlayerPlayerIdRoute: typeof PlayerPlayerIdRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/record': {
+      id: '/record'
+      path: '/record'
+      fullPath: '/record'
+      preLoaderRoute: typeof RecordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/profile': {
+      id: '/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof ProfileRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/messages': {
+      id: '/messages'
+      path: '/messages'
+      fullPath: '/messages'
+      preLoaderRoute: typeof MessagesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/calendar': {
+      id: '/calendar'
+      path: '/calendar'
+      fullPath: '/calendar'
+      preLoaderRoute: typeof CalendarRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,22 +229,98 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/player/$playerId': {
+      id: '/player/$playerId'
+      path: '/player/$playerId'
+      fullPath: '/player/$playerId'
+      preLoaderRoute: typeof PlayerPlayerIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/player/$playerId/': {
+      id: '/player/$playerId/'
+      path: '/'
+      fullPath: '/player/$playerId/'
+      preLoaderRoute: typeof PlayerPlayerIdIndexRouteImport
+      parentRoute: typeof PlayerPlayerIdRoute
+    }
+    '/player/$playerId/sessions': {
+      id: '/player/$playerId/sessions'
+      path: '/sessions'
+      fullPath: '/player/$playerId/sessions'
+      preLoaderRoute: typeof PlayerPlayerIdSessionsRouteImport
+      parentRoute: typeof PlayerPlayerIdRoute
+    }
+    '/player/$playerId/plan': {
+      id: '/player/$playerId/plan'
+      path: '/plan'
+      fullPath: '/player/$playerId/plan'
+      preLoaderRoute: typeof PlayerPlayerIdPlanRouteImport
+      parentRoute: typeof PlayerPlayerIdRoute
+    }
+    '/player/$playerId/homework': {
+      id: '/player/$playerId/homework'
+      path: '/homework'
+      fullPath: '/player/$playerId/homework'
+      preLoaderRoute: typeof PlayerPlayerIdHomeworkRouteImport
+      parentRoute: typeof PlayerPlayerIdRoute
+    }
+    '/player/$playerId/feedback': {
+      id: '/player/$playerId/feedback'
+      path: '/feedback'
+      fullPath: '/player/$playerId/feedback'
+      preLoaderRoute: typeof PlayerPlayerIdFeedbackRouteImport
+      parentRoute: typeof PlayerPlayerIdRoute
+    }
+    '/player/$playerId/tournaments/': {
+      id: '/player/$playerId/tournaments/'
+      path: '/tournaments'
+      fullPath: '/player/$playerId/tournaments/'
+      preLoaderRoute: typeof PlayerPlayerIdTournamentsIndexRouteImport
+      parentRoute: typeof PlayerPlayerIdRoute
+    }
+    '/player/$playerId/tournaments/$tournamentId': {
+      id: '/player/$playerId/tournaments/$tournamentId'
+      path: '/tournaments/$tournamentId'
+      fullPath: '/player/$playerId/tournaments/$tournamentId'
+      preLoaderRoute: typeof PlayerPlayerIdTournamentsTournamentIdRouteImport
+      parentRoute: typeof PlayerPlayerIdRoute
+    }
   }
 }
 
+interface PlayerPlayerIdRouteChildren {
+  PlayerPlayerIdFeedbackRoute: typeof PlayerPlayerIdFeedbackRoute
+  PlayerPlayerIdHomeworkRoute: typeof PlayerPlayerIdHomeworkRoute
+  PlayerPlayerIdPlanRoute: typeof PlayerPlayerIdPlanRoute
+  PlayerPlayerIdSessionsRoute: typeof PlayerPlayerIdSessionsRoute
+  PlayerPlayerIdIndexRoute: typeof PlayerPlayerIdIndexRoute
+  PlayerPlayerIdTournamentsTournamentIdRoute: typeof PlayerPlayerIdTournamentsTournamentIdRoute
+  PlayerPlayerIdTournamentsIndexRoute: typeof PlayerPlayerIdTournamentsIndexRoute
+}
+
+const PlayerPlayerIdRouteChildren: PlayerPlayerIdRouteChildren = {
+  PlayerPlayerIdFeedbackRoute: PlayerPlayerIdFeedbackRoute,
+  PlayerPlayerIdHomeworkRoute: PlayerPlayerIdHomeworkRoute,
+  PlayerPlayerIdPlanRoute: PlayerPlayerIdPlanRoute,
+  PlayerPlayerIdSessionsRoute: PlayerPlayerIdSessionsRoute,
+  PlayerPlayerIdIndexRoute: PlayerPlayerIdIndexRoute,
+  PlayerPlayerIdTournamentsTournamentIdRoute:
+    PlayerPlayerIdTournamentsTournamentIdRoute,
+  PlayerPlayerIdTournamentsIndexRoute: PlayerPlayerIdTournamentsIndexRoute,
+}
+
+const PlayerPlayerIdRouteWithChildren = PlayerPlayerIdRoute._addFileChildren(
+  PlayerPlayerIdRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  CalendarRoute: CalendarRoute,
+  MessagesRoute: MessagesRoute,
+  ProfileRoute: ProfileRoute,
+  RecordRoute: RecordRoute,
+  PlayerPlayerIdRoute: PlayerPlayerIdRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
