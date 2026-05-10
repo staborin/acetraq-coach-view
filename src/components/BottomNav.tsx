@@ -2,13 +2,21 @@ import { Link, useLocation } from "@tanstack/react-router";
 import { Home, Calendar, Mic, MessageSquare, User } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-const items = [
+type NavItem = {
+  to: string;
+  label: string;
+  icon: typeof Home;
+  exact?: boolean;
+  primary?: boolean;
+};
+
+const items: NavItem[] = [
   { to: "/", label: "Home", icon: Home, exact: true },
   { to: "/calendar", label: "Calendar", icon: Calendar },
   { to: "/record", label: "Record", icon: Mic, primary: true },
   { to: "/messages", label: "Messages", icon: MessageSquare },
   { to: "/profile", label: "Profile", icon: User },
-] as const;
+];
 
 export function BottomNav() {
   const { pathname } = useLocation();
