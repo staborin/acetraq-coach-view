@@ -88,7 +88,10 @@ function FeedbackScreen({ pid, onSent }) {
         </div>
 
         <div style={{ padding: '0 20px', display: 'flex', flexDirection: 'column', gap: 12 }}>
-          {['tech', 'tac', 'phy', 'men'].map(k => (
+          {['tech', 'tac', 'phy', 'men'].map(k => {
+            const section = draft.pillars[k];
+            const subs = Object.keys(section);
+            return (
             <div key={k} className="at-card" style={{ padding: 14 }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8 }}>
                 <span style={{
@@ -102,13 +105,23 @@ function FeedbackScreen({ pid, onSent }) {
                   fontSize: 11, fontWeight: 600,
                 }}><Icon name="edit" size={11}/> Edit</button>
               </div>
-              <ul style={{ margin: 0, paddingLeft: 16, display: 'flex', flexDirection: 'column', gap: 6 }}>
-                {draft.pillars[k].map((s, i) => (
-                  <li key={i} style={{ fontSize: 13, color: T.text, lineHeight: 1.45 }}>{s}</li>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+                {subs.map(sub => (
+                  <div key={sub}>
+                    <div style={{
+                      fontSize: 10.5, fontWeight: 700, color: PillarColor[k],
+                      marginBottom: 4, opacity: 0.75, letterSpacing: '0.04em',
+                    }}>{SUB_LABELS[sub] || sub}</div>
+                    <ul style={{ margin: 0, paddingLeft: 16, display: 'flex', flexDirection: 'column', gap: 4 }}>
+                      {section[sub].map((s, i) => (
+                        <li key={i} style={{ fontSize: 13, color: T.text, lineHeight: 1.45 }}>{s}</li>
+                      ))}
+                    </ul>
+                  </div>
                 ))}
-              </ul>
+              </div>
             </div>
-          ))}
+          )})}
 
           {/* things to work on */}
           <div style={{
@@ -126,7 +139,15 @@ function FeedbackScreen({ pid, onSent }) {
                   background: T.bg, borderRadius: 10, padding: '10px 12px',
                   borderLeft: `3px solid ${PillarColor[w.pillar]}`,
                 }}>
-                  <div className="at-eyebrow" style={{ fontSize: 9, color: PillarColor[w.pillar] }}>{PillarLabel[w.pillar].toUpperCase()}</div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                    <span className="at-eyebrow" style={{ fontSize: 9, color: PillarColor[w.pillar] }}>{PillarLabel[w.pillar].toUpperCase()}</span>
+                    {w.sub && SUB_LABELS[w.sub] && (
+                      <span style={{
+                        fontSize: 8.5, fontWeight: 600, padding: '1px 5px', borderRadius: 3,
+                        background: PillarColor[w.pillar] + '1A', color: PillarColor[w.pillar],
+                      }}>{SUB_LABELS[w.sub]}</span>
+                    )}
+                  </div>
                   <div style={{ fontSize: 13, color: T.text, marginTop: 3, lineHeight: 1.4 }}>{w.text}</div>
                 </div>
               ))}
